@@ -1,0 +1,45 @@
+nome: Café da Serra
+idioma: pt-BR
+descricao: Cafés de origem única, torra pequena toda semana e entrega em até 48 horas.
+tema:
+  cor: "#a05c2c"
+paginas:
+  - id: inicio
+    titulo: Início
+    blocos:
+      - tipo: hero
+        titulo: Café colhido na serra, torrado hoje
+        texto: Grãos de origem única, torra pequena toda semana e entrega em até 48h na tua casa.
+        botao: Pedir pelo WhatsApp
+        link: https://wa.me/5521999999999
+      - tipo: lista
+        titulo: Por que a gente existe
+        itens:
+          - titulo: Origem rastreada
+            texto: Cada lote tem fazenda, altitude e data de colheita no rótulo.
+          - titulo: Torra pequena
+            texto: Torras de 12 kg no drum, no ponto, nunca queimadas.
+          - titulo: Entrega rápida
+            texto: Torrado na segunda, na tua casa até 48h depois.
+      - tipo: contato
+        titulo: Assine o plano mensal
+        texto: A partir de R$ 69/mês, café fresco toda semana. Cancele quando quiser.
+        botao: Falar no WhatsApp
+        link: https://wa.me/5521999999999
+  - id: sobre
+    titulo: Sobre
+    blocos:
+      - tipo: texto
+        titulo: Da serra pra xícara
+        paragrafos:
+          - O Café da Serra nasceu em 2021 numa cozinha de 6 m², com um torrador de segunda mão e uma teimosia: café bom não precisa de intermediário.
+          - Hoje trabalhamos com três pequenos produtores da serra e torramos toda segunda-feira. Sem estoque encalhado, sem café velho.
+      - tipo: lista
+        titulo: Como funciona
+        itens:
+          - titulo: Você pede
+            texto: Escolhe o plano e o ponto de torra (claro, médio ou escuro).
+          - titulo: A gente torra
+            texto: Toda segunda, em lotes de 12 kg, no ponto que você pediu.
+          - titulo: Chega fresco
+            texto: Enviamos em até 48h depois da torra, com data no rótulo.
