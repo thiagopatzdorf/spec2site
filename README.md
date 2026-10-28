@@ -33,11 +33,24 @@ paginas:
 
 O exemplo completo com duas páginas está em `exemplos/cafeteria.yaml`.
 
-### Blocos da v0.1
+Fotos também são bloco — e imagem local vira asset do site sozinha:
+
+```yaml
+      - tipo: galeria
+        titulo: Da colheita pra xícara
+        itens:
+          - imagem: imagens/colheita.svg
+            legenda: Colheita seletiva, só cereja madura
+```
+
+Imagens com caminho relativo ao sitefile são copiadas pra `dist/imagens/`; URLs `https` entram direto.
+
+### Blocos
 
 - `hero` — título grande, texto e botão
 - `texto` — seção com parágrafos
 - `lista` — grade de itens com título e texto
+- `galeria` — grade de fotos com legenda (imagens locais viram assets do site)
 - `contato` — chamada final com botão
 
 ### Formato aceito
@@ -46,7 +59,7 @@ Parser YAML embutido, feito sob medida pro sitefile: mapas aninhados por indenta
 
 ## Roadmap
 
-- v0.2 — bloco galeria, `sitemap.xml`, favicon/OG image
+- v0.2 (em andamento) — ✓ bloco galeria · `sitemap.xml` · favicon/OG image
 - v0.3 — blocos de preços e FAQ, segundo tema de cor
 - v0.4 — `npx spec2site`, deploy num comando
 - v1.0 — formato do sitefile congelado e documentado

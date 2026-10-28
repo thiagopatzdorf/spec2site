@@ -2,11 +2,11 @@
 // spec2site — um sitefile.yaml, um site estático. Zero dependências.
 // James-02 · Genesis Innovation · MIT
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync } from 'node:fs';
+import { join, dirname } from 'node:path';
 
 // ---------- parser YAML mínimo (subconjunto do sitefile) ----------
-// Suporta: mapas aninhados por indentação, listas com "- ", strings
+// Suporta: mapas aninhados por indentação, listas com "-", strings
 // (nuas ou entre aspas), números, booleanos e comentários em linha própria.
 function parseEscalar(s) {
   s = s.trim();
@@ -100,10 +100,38 @@ function validar(spec) {
 // ---------- render ----------
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// ---------- imagens ----------
+// Caminho relativo ao sitefile é copiado pra <saida>/imagens/ (nome
+// preservado, com sufixo se o nome repetir). URL http(s) e data: direto.
+const CTX = { saida: 'dist', base: '.', mapa: new Map(), usados: new Set() };
+
+function resolverImagem(caminho) {
+  const c = String(caminho || '').trim();
+  if (!c) throw new Error('item de galeria sem "imagem"');
+  if (/^https?:\/\//.test(c) || c.startsWith('data:')) return c;
+  if (CTX.mapa.has(c)) return CTX.mapa.get(c);
+  const origem = join(CTX.base, c);
+  if (!existsSync(origem)) throw new Error(`imagem não achada: "${c}" (procurei em ${origem})`);
+  const nome = c.split('/').pop() || 'imagem';
+  let destino = nome;
+  let n = 2;
+  while (CTX.usados.has(destino)) {
+    destino = /\.[^.]+$/.test(nome) ? nome.replace(/(\.[^.]+)$/, `-${n}$1`) : `${nome}-${n}`;
+    n += 1;
+  }
+  CTX.usados.add(destino);
+  mkdirSync(join(CTX.saida, 'imagens'), { recursive: true });
+  copyFileSync(origem, join(CTX.saida, 'imagens', destino));
+  const caminhoFinal = `imagens/${destino}`;
+  CTX.mapa.set(c, caminhoFinal);
+  return caminhoFinal;
+}
+
 const BLOCOS = {
   hero: (b) => `<section class="hero"><h1>${esc(b.titulo || '')}</h1>${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${b.botao && b.link ? `<a class="btn" href="${esc(b.link)}">${esc(b.botao)}</a>` : ''}</section>`,
   texto: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${(b.paragrafos || []).map((p) => `<p>${esc(p)}</p>`).join('')}${b.texto ? `<p>${esc(b.texto)}</p>` : ''}</section>`,
   lista: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}<div class="grid">${(b.itens || []).map((it) => `<article><h3>${esc(it.titulo || '')}</h3><p>${esc(it.texto || '')}</p></article>`).join('')}</div></section>`,
+  galeria: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.texto ? `<p class="intro">${esc(b.texto)}</p>` : ''}<div class="galeria">${(b.itens || []).map((it) => `<figure class="galeria-item"><img src="${esc(resolverImagem(it.imagem))}" alt="${esc(it.alt || it.legenda || '')}" loading="lazy">${it.legenda ? `<figcaption>${esc(it.legenda)}</figcaption>` : ''}</figure>`).join('')}</div></section>`,
   contato: (b) => `<section class="secao contato">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${b.link ? `<a class="btn" href="${esc(b.link)}">${esc(b.botao || 'Fale com a gente')}</a>` : ''}</section>`,
 };
 
@@ -131,6 +159,12 @@ function css(spec) {
   .grid article { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; padding: 24px; }
   .grid h3 { margin-bottom: 8px; }
   .grid p { opacity: 0.8; }
+  .intro { opacity: 0.8; max-width: 640px; margin-bottom: 20px; }
+  .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .galeria-item { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .galeria-item:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(28, 25, 23, 0.12); }
+  .galeria-item img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .galeria-item figcaption { padding: 12px 16px; font-size: 14px; opacity: 0.75; }
   .contato { text-align: center; background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 56px 24px; margin: 48px 0; }
   footer { border-top: 1px solid var(--borda); margin-top: 48px; padding: 32px 24px; text-align: center; opacity: 0.6; font-size: 14px; }
   @media (max-width: 600px) { .hero { padding: 64px 0 48px; } }
@@ -167,7 +201,7 @@ ${corpo}
 // ---------- CLI ----------
 const [arquivo, ...args] = process.argv.slice(2);
 if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.1.0 — um sitefile.yaml, um site estático.');
+  console.log('spec2site v0.2.0 — um sitefile.yaml, um site estático.');
   console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta]');
   process.exit(arquivo ? 0 : 1);
 }
@@ -192,13 +226,20 @@ try {
 
 const home = spec.paginas.find((p) => p.id === 'inicio') || spec.paginas[0];
 const arquivoDe = (p) => (p === home ? 'index.html' : `${esc(p.id)}.html`);
-
 mkdirSync(saida, { recursive: true });
+CTX.saida = saida;
+CTX.base = dirname(arquivo);
 const gerados = [];
-for (const p of spec.paginas) {
-  const nome = arquivoDe(p);
-  writeFileSync(join(saida, nome), paginaHTML(spec, p, arquivoDe));
-  gerados.push(nome);
+try {
+  for (const p of spec.paginas) {
+    const nome = arquivoDe(p);
+    writeFileSync(join(saida, nome), paginaHTML(spec, p, arquivoDe));
+    gerados.push(nome);
+  }
+} catch (e) {
+  console.error('erro gerando as páginas:', e.message);
+  process.exit(1);
 }
 writeFileSync(join(saida, 'robots.txt'), 'User-agent: *\nAllow: /\n');
-console.log(`spec2site v0.1.0 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}`);
+const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
+console.log(`spec2site v0.2.0 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);

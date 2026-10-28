@@ -21,6 +21,21 @@ paginas:
             texto: Torras de 12 kg no drum, no ponto, nunca queimadas.
           - titulo: Entrega rápida
             texto: Torrado na segunda, na tua casa até 48h depois.
+      - tipo: galeria
+        titulo: Da serra pra xícara
+        itens:
+          - imagem: imagens/colheita.svg
+            legenda: Colheita seletiva, só cereja madura
+          - imagem: imagens/fazenda.svg
+            legenda: Sítio Boa Vista, 1.200 m de altitude
+          - imagem: imagens/torra.svg
+            legenda: Torra de 12 kg, toda segunda
+          - imagem: imagens/embalagem.svg
+            legenda: Data da torra no rótulo, sempre
+          - imagem: imagens/xicara.svg
+            legenda: Descanso de 7 dias antes de moer
+          - imagem: imagens/entrega.svg
+            legenda: Na tua casa em até 48h
       - tipo: contato
         titulo: Assine o plano mensal
         texto: A partir de R$ 69/mês, café fresco toda semana. Cancele quando quiser.
