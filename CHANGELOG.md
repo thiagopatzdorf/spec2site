@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 — 2026-10-29
+
+- Bloco `precos`: tabela de planos em cards com nome, preço, lista de recursos, botão CTA e plano em destaque ("★ Mais popular").
+- Bloco `faq`: seção de perguntas frequentes em `<details><summary>`, expansível, zero JavaScript.
+- Exemplo `cafeteria.yaml` ganhou seção de planos mensais (3 cards) na página inicial e FAQ na página Sobre.
+- Zero dependências adicionadas.
+
 ## 0.2.2 — 2026-10-29
 
 - Favicon SVG automático: ícone com a cor do tema (`S` estilizado), inline via `data:` — zero assets.

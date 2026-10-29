@@ -147,6 +147,8 @@ const BLOCOS = {
   lista: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}<div class="grid">${(b.itens || []).map((it) => `<article><h3>${esc(it.titulo || '')}</h3><p>${esc(it.texto || '')}</p></article>`).join('')}</div></section>`,
   galeria: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.texto ? `<p class="intro">${esc(b.texto)}</p>` : ''}<div class="galeria">${(b.itens || []).map((it) => `<figure class="galeria-item"><img src="${esc(resolverImagem(it.imagem))}" alt="${esc(it.alt || it.legenda || '')}" loading="lazy">${it.legenda ? `<figcaption>${esc(it.legenda)}</figcaption>` : ''}</figure>`).join('')}</div></section>`,
   contato: (b) => `<section class="secao contato">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${b.link ? `<a class="btn" href="${esc(b.link)}">${esc(b.botao || 'Fale com a gente')}</a>` : ''}</section>`,
+  precos: (b) => `<section class="secao precos">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.intro ? `<p class="intro">${esc(b.intro)}</p>` : ''}<div class="tabela-precos">${(b.planos || []).map((pl) => `<article class="plano-card${pl.destaque ? ' destaque' : ''}"><h3>${esc(pl.plano || '')}</h3><span class="preco">${esc(pl.preco || '')}</span><ul>${(pl.recursos || []).map((r) => `<li>${esc(r)}</li>`).join('')}</ul>${pl.botao && pl.link ? `<a class="btn" href="${esc(pl.link)}">${esc(pl.botao)}</a>` : ''}</article>`).join('')}</div></section>`,
+  faq: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}<div class="faq">${(b.perguntas || []).map((q) => `<details class="faq-item"><summary>${esc(q.pergunta || '')}</summary><p>${esc(q.resposta || '')}</p></details>`).join('')}</div></section>`,
 };
 
 function css(spec) {
@@ -181,6 +183,22 @@ function css(spec) {
   .galeria-item figcaption { padding: 12px 16px; font-size: 14px; opacity: 0.75; }
   .contato { text-align: center; background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 56px 24px; margin: 48px 0; }
   footer { border-top: 1px solid var(--borda); margin-top: 48px; padding: 32px 24px; text-align: center; opacity: 0.6; font-size: 14px; }
+    .tabela-precos { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; align-items: start; margin-top: 20px; }
+  .plano-card { background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 32px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
+  .plano-card.destaque { border-color: var(--cor); box-shadow: 0 0 0 2px var(--cor); position: relative; }
+  .plano-card.destaque::before { content: '★ Mais popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--cor); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+  .plano-card h3 { font-size: 20px; }
+  .preco { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; }
+  .plano-card ul { list-style: none; padding: 0; text-align: left; }
+  .plano-card li { padding: 6px 0; border-bottom: 1px solid var(--borda); font-size: 14px; }
+  .plano-card li::before { content: '✓'; color: var(--cor); margin-right: 8px; font-weight: 700; }
+  .plano-card .btn { margin-top: auto; }
+  .faq { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+  .faq-item { background: var(--cartao); border: 1px solid var(--borda); border-radius: 12px; overflow: hidden; }
+  .faq-item summary { cursor: pointer; padding: 16px 20px; font-weight: 600; font-size: 16px; }
+  .faq-item summary:hover { background: rgba(0,0,0,0.02); }
+  .faq-item p { padding: 0 20px 16px; margin: 0; opacity: 0.8; font-size: 15px; }
+
   @media (max-width: 600px) { .hero { padding: 64px 0 48px; } }
   `;
 }
@@ -223,7 +241,7 @@ ${corpo}
 // ---------- CLI ----------
 const [arquivo, ...args] = process.argv.slice(2);
 if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.2.2 — um sitefile.yaml, um site estático.');
+  console.log('spec2site v0.3.0 — um sitefile.yaml, um site estático.');
   console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta] [--url https://teusite.com]');
   process.exit(arquivo ? 0 : 1);
 }
@@ -279,6 +297,6 @@ if (urlBase) {
   );
 }
 const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
-console.log(`spec2site v0.2.2 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+console.log(`spec2site v0.3.0 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
 if (urlBase) console.log(`sitemap.xml com ${spec.paginas.length} URL(s) — robots.txt aponta pra ele.`);
 else console.log('sitemap.xml não gerado: defina "url" no sitefile (ou passe --url https://teusite.com).');

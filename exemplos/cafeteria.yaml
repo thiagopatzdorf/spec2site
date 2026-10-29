@@ -37,6 +37,41 @@ paginas:
             legenda: Descanso de 7 dias antes de moer
           - imagem: imagens/entrega.svg
             legenda: Na tua casa em até 48h
+      - tipo: precos
+        titulo: Planos mensais
+        intro: Café fresco entregue toda semana. Cancele quando quiser.
+        planos:
+          - plano: Experimental
+            preco: R$ 39/mês
+            recursos:
+              - 250 g por semana
+              - 1 origem à sua escolha
+              - Torra clara, média ou escura
+              - Frete incluso (regiões Sul e Sudeste)
+              - Cancele quando quiser
+            botao: Quero começar
+            link: https://wa.me/5521999999999
+          - plano: Assinatura
+            preco: R$ 69/mês
+            destaque: true
+            recursos:
+              - 500 g por semana
+              - 2 origens diferentes
+              - Grãos ou moído (sua escolha)
+              - Frete incluso (Brasil todo)
+              - Desconto em presentes
+            botao: Assinar agora
+            link: https://wa.me/5521999999999
+          - plano: Corporativo
+            preco: R$ 199/mês
+            recursos:
+              - 1 kg por semana
+              - Até 4 origens diferentes
+              - Embalagens personalizadas
+              - Frete incluso (Brasil todo)
+              - Prioridade no suporte
+            botao: Fale com a gente
+            link: https://wa.me/5521999999999
       - tipo: contato
         titulo: Assine o plano mensal
         texto: A partir de R$ 69/mês, café fresco toda semana. Cancele quando quiser.
@@ -59,3 +94,14 @@ paginas:
             texto: Toda segunda, em lotes de 12 kg, no ponto que você pediu.
           - titulo: Chega fresco
             texto: Enviamos em até 48h depois da torra, com data no rótulo.
+      - tipo: faq
+        titulo: Dúvidas frequentes
+        perguntas:
+          - pergunta: Quanto tempo dura o café depois da torra?
+            resposta: O pico de sabor é entre 7 e 21 dias da torra. Depois disso ele ainda é bom, mas vai perdendo os aromas mais delicados. Por isso torramos só o necessário pra cada semana.
+          - pergunta: Posso escolher o ponto de torra?
+            resposta: Sim — claro, médio ou escuro. Se não souber, o médio é o mais equilibrado e agrada a maioria.
+          - pergunta: Como funciona a entrega?
+            resposta: Torramos na segunda, despachamos na terça e chega em até 48h dependendo da sua região. O frete é calculado no fechamento.
+          - pergunta: Dá pra cancelar a assinatura?
+            resposta: Sim, a qualquer momento, sem multa. O próximo ciclo simplesmente não é cobrado. Sem burocracia.
