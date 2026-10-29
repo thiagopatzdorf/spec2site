@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.2 — 2026-10-29
+
+- Favicon SVG automático: ícone com a cor do tema (`S` estilizado), inline via `data:` — zero assets.
+- `og:image` automática: banner SVG com nome e descrição do site, inline via `data:`.
+- `twitter:card = summary_large_image` nas páginas.
+- Nenhuma dependência adicionada — tudo inline.
+
 ## 0.2.1 — 2026-10-28
 
 - `sitemap.xml` automático: com `url` no sitefile (ou `--url` na linha de comando), o sitemap nasce com todas as páginas do site.

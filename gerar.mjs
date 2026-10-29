@@ -100,6 +100,20 @@ function validar(spec) {
 // ---------- render ----------
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
+// ---------- SVGs (favicon e OG image inline) ----------
+function gerarFaviconSVG(cor) {
+  const c = encodeURIComponent(cor);
+  return '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"6\" fill=\"' + c + '\"/><text x=\"16\" y=\"22\" font-family=\"system-ui,sans-serif\" font-size=\"20\" font-weight=\"bold\" fill=\"#fff\" text-anchor=\"middle\">S</text></svg>';
+}
+function gerarOGImageSVG(nome, descricao, cor) {
+  const n = esc(nome || 'spec2site');
+  const d = esc(descricao || '');
+  const c = encodeURIComponent(cor);
+  let txt = '<text x=\"120\" y=\"175\" font-family=\"system-ui,sans-serif\" font-size=\"52\" font-weight=\"bold\" fill=\"#fff\" text-anchor=\"middle\">' + n + '</text>';
+  if (d) txt += '<text x=\"120\" y=\"215\" font-family=\"system-ui,sans-serif\" font-size=\"20\" fill=\"rgba(255,255,255,0.8)\" text-anchor=\"middle\">' + d + '</text>';
+  return '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 240\"><rect width=\"240\" height=\"240\" fill=\"' + c + '\"/><rect x=\"20\" y=\"20\" width=\"200\" height=\"200\" rx=\"12\" fill=\"none\" stroke=\"rgba(255,255,255,0.15)\" stroke-width=\"2\"/>' + txt + '</svg>';
+}
+
 // ---------- imagens ----------
 // Caminho relativo ao sitefile é copiado pra <saida>/imagens/ (nome
 // preservado, com sufixo se o nome repetir). URL http(s) e data: direto.
@@ -172,6 +186,11 @@ function css(spec) {
 }
 
 function paginaHTML(spec, pagina, arquivoDe) {
+  const cor = /^#[0-9a-fA-F]{3,8}$/.test(String(spec.tema && spec.tema.cor ? spec.tema.cor : '')) ? spec.tema.cor : '#a05c2c';
+  const faviconSVG = gerarFaviconSVG(cor);
+  const ogSVG = gerarOGImageSVG(spec.nome, spec.descricao, cor);
+  const faviconData = 'data:image/svg+xml,' + encodeURIComponent(faviconSVG);
+  const ogImageData = 'data:image/svg+xml,' + encodeURIComponent(ogSVG);
   const navItens = spec.paginas.map((p) => `<a href="${arquivoDe(p)}"${p === pagina ? ' class="ativo"' : ''}>${esc(p.titulo)}</a>`).join('');
   const corpo = (pagina.blocos || [])
     .map((b) => (BLOCOS[b.tipo] ? BLOCOS[b.tipo](b) : `<!-- bloco desconhecido: ${esc(b.tipo)} -->`))
@@ -186,6 +205,9 @@ function paginaHTML(spec, pagina, arquivoDe) {
 <meta property="og:title" content="${esc(pagina.titulo)} — ${esc(spec.nome)}">
 <meta property="og:description" content="${esc(spec.descricao || '')}">
 <meta property="og:type" content="website">
+<meta property="og:image" content="${esc(ogImageData)}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="${esc(faviconData)}">
 <style>${css(spec)}</style>
 </head>
 <body>
@@ -201,7 +223,7 @@ ${corpo}
 // ---------- CLI ----------
 const [arquivo, ...args] = process.argv.slice(2);
 if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.2.1 — um sitefile.yaml, um site estático.');
+  console.log('spec2site v0.2.2 — um sitefile.yaml, um site estático.');
   console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta] [--url https://teusite.com]');
   process.exit(arquivo ? 0 : 1);
 }
@@ -257,6 +279,6 @@ if (urlBase) {
   );
 }
 const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
-console.log(`spec2site v0.2.1 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+console.log(`spec2site v0.2.2 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
 if (urlBase) console.log(`sitemap.xml com ${spec.paginas.length} URL(s) — robots.txt aponta pra ele.`);
 else console.log('sitemap.xml não gerado: defina "url" no sitefile (ou passe --url https://teusite.com).');
