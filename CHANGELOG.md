@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 — 2026-10-28
+
+- `sitemap.xml` automático: com `url` no sitefile (ou `--url` na linha de comando), o sitemap nasce com todas as páginas do site.
+- `robots.txt` ganhou linha `Sitemap:` apontando pro sitemap quando a URL existe.
+- URL sem `http(s)://` para o gerador com mensagem clara.
+
 ## 0.2.0 — 2026-10-28
 
 - Bloco `galeria`: grade de fotos responsiva com legenda, `loading="lazy"` e hover suave.

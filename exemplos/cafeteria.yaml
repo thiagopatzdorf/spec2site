@@ -1,6 +1,7 @@
 nome: Café da Serra
 idioma: pt-BR
 descricao: Cafés de origem única, torra pequena toda semana e entrega em até 48 horas.
+url: https://cafe-da-serra.exemplo.com
 tema:
   cor: "#a05c2c"
 paginas:

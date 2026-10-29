@@ -201,14 +201,17 @@ ${corpo}
 // ---------- CLI ----------
 const [arquivo, ...args] = process.argv.slice(2);
 if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.2.0 — um sitefile.yaml, um site estático.');
-  console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta]');
+  console.log('spec2site v0.2.1 — um sitefile.yaml, um site estático.');
+  console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta] [--url https://teusite.com]');
   process.exit(arquivo ? 0 : 1);
 }
 
 let saida = 'dist';
 const idxSaida = args.indexOf('--saida');
 if (idxSaida !== -1 && args[idxSaida + 1]) saida = args[idxSaida + 1];
+let urlBase = '';
+const idxUrl = args.indexOf('--url');
+if (idxUrl !== -1 && args[idxUrl + 1]) urlBase = args[idxUrl + 1].trim();
 
 let spec;
 try {
@@ -221,6 +224,11 @@ try {
   validar(spec);
 } catch (e) {
   console.error(e.message);
+  process.exit(1);
+}
+if (spec.url && !urlBase) urlBase = String(spec.url).trim();
+if (urlBase && !/^https?:\/\//i.test(urlBase)) {
+  console.error('erro: "url" (ou --url) deve começar com http:// ou https:// — é dela que nasce o sitemap.xml.');
   process.exit(1);
 }
 
@@ -240,6 +248,15 @@ try {
   console.error('erro gerando as páginas:', e.message);
   process.exit(1);
 }
-writeFileSync(join(saida, 'robots.txt'), 'User-agent: *\nAllow: /\n');
+writeFileSync(join(saida, 'robots.txt'), `User-agent: *\nAllow: /\n${urlBase ? `Sitemap: ${urlBase}/sitemap.xml\n` : ''}`);
+if (urlBase) {
+  const locs = spec.paginas.map((p) => `  <url><loc>${esc(`${urlBase}/${p === home ? '' : arquivoDe(p)}`)}</loc></url>`);
+  writeFileSync(
+    join(saida, 'sitemap.xml'),
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${locs.join('\n')}\n</urlset>\n`
+  );
+}
 const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
-console.log(`spec2site v0.2.0 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+console.log(`spec2site v0.2.1 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+if (urlBase) console.log(`sitemap.xml com ${spec.paginas.length} URL(s) — robots.txt aponta pra ele.`);
+else console.log('sitemap.xml não gerado: defina "url" no sitefile (ou passe --url https://teusite.com).');

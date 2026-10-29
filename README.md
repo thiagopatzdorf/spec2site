@@ -20,6 +20,7 @@ Site simples demais pra morrer na mão de obra de montar header, caçar tipograf
 nome: Café da Serra
 idioma: pt-BR
 descricao: Torra pequena toda semana, direto pra xícara.
+url: https://cafe-da-serra.exemplo.com
 tema:
   cor: "#a05c2c"
 paginas:
@@ -45,6 +46,8 @@ Fotos também são bloco — e imagem local vira asset do site sozinha:
 
 Imagens com caminho relativo ao sitefile são copiadas pra `dist/imagens/`; URLs `https` entram direto.
 
+Tem `url` no sitefile (ou `--url` no comando)? O gerador emite também o `sitemap.xml` com todas as páginas e um `robots.txt` que aponta pra ele. Sem `url`, o site nasce do mesmo jeito — só sem sitemap.
+
 ### Blocos
 
 - `hero` — título grande, texto e botão
@@ -59,7 +62,7 @@ Parser YAML embutido, feito sob medida pro sitefile: mapas aninhados por indenta
 
 ## Roadmap
 
-- v0.2 (em andamento) — ✓ bloco galeria · `sitemap.xml` · favicon/OG image
+- v0.2 (em andamento) — ✓ bloco galeria · ✓ `sitemap.xml` · favicon/OG image
 - v0.3 — blocos de preços e FAQ, segundo tema de cor
 - v0.4 — `npx spec2site`, deploy num comando
 - v1.0 — formato do sitefile congelado e documentado
