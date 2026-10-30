@@ -1,3 +1,11 @@
+## 0.3.2 — 2026-10-30
+
+- `--serve` e `--port`: servidor HTTP embutido (zero dependências, Node `node:http`).
+- Gere o site e sirva ele na hora: `node gerar.mjs exemplos/cafeteria.yaml --saida dist --serve`.
+- Porta padrão 8080, customizável com `--port 3000`.
+- Tratamento de erro no servidor (porta ocupada, permissão).
+- Preparação para v0.4: deploy num comando.
+
 # Changelog
 
 ## 0.3.1 — 2026-10-30

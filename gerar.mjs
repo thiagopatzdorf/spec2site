@@ -243,8 +243,8 @@ ${corpo}
 // ---------- CLI ----------
 const [arquivo, ...args] = process.argv.slice(2);
 if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.3.1 — um sitefile.yaml, um site estático.');
-  console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta] [--url https://teusite.com]');
+  console.log('spec2site v0.3.2 — um sitefile.yaml, um site estático.');
+  console.log('uso: npx spec2site <sitefile.yaml> [--saida pasta] [--url URL] [--serve] [--port PORTA]');
   process.exit(arquivo ? 0 : 1);
 }
 
@@ -254,6 +254,10 @@ if (idxSaida !== -1 && args[idxSaida + 1]) saida = args[idxSaida + 1];
 let urlBase = '';
 const idxUrl = args.indexOf('--url');
 if (idxUrl !== -1 && args[idxUrl + 1]) urlBase = args[idxUrl + 1].trim();
+let servir = args.indexOf('--serve') !== -1;
+let porta = 8080;
+const idxPorta = args.indexOf('--port');
+if (idxPorta !== -1 && args[idxPorta + 1]) porta = parseInt(args[idxPorta + 1]) || 8080;
 
 let spec;
 try {
@@ -299,6 +303,45 @@ if (urlBase) {
   );
 }
 const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
-console.log(`spec2site v0.3.1 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+console.log(`spec2site v0.3.2 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
 if (urlBase) console.log(`sitemap.xml com ${spec.paginas.length} URL(s) — robots.txt aponta pra ele.`);
 else console.log('sitemap.xml não gerado: defina "url" no sitefile (ou passe --url https://teusite.com).');
+
+
+// ---------- servidor HTTP embutido ----------
+if (servir) {
+  const { createServer } = await import('node:http');
+  const MIMES = {
+    '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8',
+    '.js': 'application/javascript', '.json': 'application/json',
+    '.png': 'image/png', '.jpg': 'image/jpeg', '.gif': 'image/gif',
+    '.svg': 'image/svg+xml', '.ico': 'image/x-icon',
+    '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8',
+    '.webp': 'image/webp', '.avif': 'image/avif',
+  };
+  const server = createServer((req, res) => {
+    let caminho = req.url === '/' ? '/index.html' : req.url;
+    const arquivo = join(saida, caminho);
+    try {
+      const corpo = readFileSync(arquivo);
+      const idx = caminho.lastIndexOf('.');
+      const ext = idx === -1 ? '' : caminho.slice(idx);
+      const mime = MIMES[ext] || 'application/octet-stream';
+      res.writeHead(200, { 'Content-Type': mime });
+      res.end(corpo);
+    } catch {
+      res.writeHead(404);
+      res.end('404 não achado');
+    }
+  });
+  server.on('error', (e) => {
+    console.error('erro no servidor:', e.message);
+    process.exit(1);
+  });
+  server.listen(porta, () => {
+    console.log(`  servindo em http://localhost:${porta}/ — Ctrl+C para parar.`);
+  });
+
+  // Keep process alive
+  await new Promise(() => {});
+}

@@ -1,6 +1,6 @@
 {
   "name": "spec2site",
-  "version": "0.2.0",
+  "version": "0.3.2",
   "description": "Um sitefile.yaml, um site estático. Zero dependências.",
   "type": "module",
   "bin": { "spec2site": "./gerar.mjs" },
