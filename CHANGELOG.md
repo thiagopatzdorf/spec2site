@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 — 2026-10-30
+
+- Segundo tema de cor: `tema.cor2` no sitefile vira `--cor2` no CSS — botões ganham gradiente (cor principal -> cor2) e títulos de seção ganham barra de destaque.
+- `cor2` e opcional: sem ela o gerador usa a cor principal e o visual nao muda.
+- Exemplo `cafeteria.yaml`: duas cores (marrom + caramelo).
+
 ## 0.3.0 — 2026-10-29
 
 - Bloco `precos`: tabela de planos em cards com nome, preço, lista de recursos, botão CTA e plano em destaque ("★ Mais popular").

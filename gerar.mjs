@@ -153,8 +153,9 @@ const BLOCOS = {
 
 function css(spec) {
   const cor = /^#[0-9a-fA-F]{3,8}$/.test(String(spec.tema && spec.tema.cor ? spec.tema.cor : '')) ? spec.tema.cor : '#a05c2c';
+  const cor2 = /^#[0-9a-fA-F]{3,8}$/.test(String(spec.tema && spec.tema.cor2 ? spec.tema.cor2 : '')) ? spec.tema.cor2 : cor;
   return `
-  :root { --cor: ${cor}; --tinta: #1c1917; --fundo: #faf7f2; --cartao: #ffffff; --borda: #e7e0d8; }
+  :root { --cor: ${cor}; --cor2: ${cor2}; --tinta: #1c1917; --fundo: #faf7f2; --cartao: #ffffff; --borda: #e7e0d8; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--tinta); background: var(--fundo); line-height: 1.6; }
   header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--borda); }
@@ -167,10 +168,11 @@ function css(spec) {
   .hero { padding: 96px 0 80px; max-width: 720px; }
   .hero h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
   .hero p { font-size: 20px; opacity: 0.8; margin-bottom: 28px; }
-  .btn { display: inline-block; background: var(--cor); color: #fff; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+  .btn { display: inline-block; background: linear-gradient(135deg, var(--cor), var(--cor2)); color: #fff; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; }
   .btn:hover { filter: brightness(1.1); }
   .secao { padding: 48px 0; }
   .secao h2 { font-size: 28px; margin-bottom: 20px; letter-spacing: -0.01em; }
+  .secao h2::after { content: ''; display: block; width: 48px; height: 4px; border-radius: 2px; background: var(--cor2); margin-top: 8px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
   .grid article { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; padding: 24px; }
   .grid h3 { margin-bottom: 8px; }
@@ -241,7 +243,7 @@ ${corpo}
 // ---------- CLI ----------
 const [arquivo, ...args] = process.argv.slice(2);
 if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.3.0 — um sitefile.yaml, um site estático.');
+  console.log('spec2site v0.3.1 — um sitefile.yaml, um site estático.');
   console.log('uso: node gerar.mjs <sitefile.yaml> [--saida pasta] [--url https://teusite.com]');
   process.exit(arquivo ? 0 : 1);
 }
@@ -297,6 +299,6 @@ if (urlBase) {
   );
 }
 const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
-console.log(`spec2site v0.3.0 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+console.log(`spec2site v0.3.1 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
 if (urlBase) console.log(`sitemap.xml com ${spec.paginas.length} URL(s) — robots.txt aponta pra ele.`);
 else console.log('sitemap.xml não gerado: defina "url" no sitefile (ou passe --url https://teusite.com).');

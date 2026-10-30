@@ -65,7 +65,7 @@ Parser YAML embutido, feito sob medida pro sitefile: mapas aninhados por indenta
 ## Roadmap
 
 - v0.2 — ✓ bloco galeria · ✓ `sitemap.xml` · ✓ favicon/OG image
-- v0.3 (em andamento) — ✓ blocos `precos` e `faq` · segundo tema de cor
+- v0.3 (em andamento) — ✓ blocos `precos` e `faq` · ✓ segundo tema de cor
 - v0.4 — `npx spec2site`, deploy num comando
 - v1.0 — formato do sitefile congelado e documentado
 
