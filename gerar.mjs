@@ -242,7 +242,7 @@ ${corpo}
 
 // ---------- CLI ----------
 const [cmd, ...args] = process.argv.slice(2);
-const VERSAO = '0.3.4';
+const VERSAO = '0.3.5';
 
 // ---------- versao ----------
 if (cmd === "--version" || cmd === "-v") {
@@ -304,10 +304,10 @@ if (!cmd || cmd === '--help' || cmd === '-h') {
   console.log('  npx spec2site <sitefile.yaml> [opções]  Gera o site');
   console.log('');
   console.log('opções:');
-  console.log('  --saida pasta    Pasta de saída (padrão: dist/)');
+  console.log('  --saida, -o, --output pasta    Pasta de saída (padrão: dist/)');
   console.log('  --url URL        URL base (pra sitemap.xml e robots.txt)');
   console.log('  --serve          Sobe servidor HTTP embutido');
-  console.log('  --port PORTA     Porta do servidor (padrão: 8080, com --serve)');
+  console.log('  --port, -p PORTA Porta do servidor (padrão: 8080, com --serve)');
   process.exit(cmd ? 0 : 1);
 }
 
@@ -316,6 +316,10 @@ const arquivo = cmd;
 let saida = 'dist';
 const idxSaida = args.indexOf('--saida');
 if (idxSaida !== -1 && args[idxSaida + 1]) saida = args[idxSaida + 1];
+const idxOutput = args.indexOf('--output');
+if (idxOutput !== -1 && args[idxOutput + 1]) saida = args[idxOutput + 1];
+const idxO = args.indexOf('-o');
+if (idxO !== -1 && args[idxO + 1]) saida = args[idxO + 1];
 let urlBase = '';
 const idxUrl = args.indexOf('--url');
 if (idxUrl !== -1 && args[idxUrl + 1]) urlBase = args[idxUrl + 1].trim();
@@ -323,6 +327,8 @@ let servir = args.indexOf('--serve') !== -1;
 let porta = 8080;
 const idxPorta = args.indexOf('--port');
 if (idxPorta !== -1 && args[idxPorta + 1]) porta = parseInt(args[idxPorta + 1]) || 8080;
+const idxP = args.indexOf('-p');
+if (idxP !== -1 && args[idxP + 1]) porta = parseInt(args[idxP + 1]) || 8080;
 
 let spec;
 try {

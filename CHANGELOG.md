@@ -1,3 +1,10 @@
+## 0.3.5 — 2026-10-31
+
+- Short flags `-o`/`--output` (alias pra `--saida`) e `-p` (alias pra `--port`).
+- `--help` atualizado com as flags curtas.
+- `.npmignore` criado: mantém o pacote npm limpo (sem docs/ ou .gitignore).
+- Preparação final pro npm: CLI mais amigável pro `npx spec2site`.
+
 ## 0.3.4 — 2026-10-31
 
 - `--version` / `-v`: mostra a versão e sai — pra saber qual spec2site você tem

@@ -1,6 +1,6 @@
 {
   "name": "spec2site",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "Um sitefile.yaml, um site est\u00e1tico. Zero depend\u00eancias.",
   "type": "module",
   "bin": {
