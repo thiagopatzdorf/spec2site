@@ -241,13 +241,72 @@ ${corpo}
 }
 
 // ---------- CLI ----------
-const [arquivo, ...args] = process.argv.slice(2);
-if (!arquivo || arquivo === '--help' || arquivo === '-h') {
-  console.log('spec2site v0.3.2 — um sitefile.yaml, um site estático.');
-  console.log('uso: npx spec2site <sitefile.yaml> [--saida pasta] [--url URL] [--serve] [--port PORTA]');
-  process.exit(arquivo ? 0 : 1);
+const [cmd, ...args] = process.argv.slice(2);
+const VERSAO = '0.3.3';
+
+// ---------- subcomando: init (scaffold de sitefile.yaml) ----------
+if (cmd === 'init') {
+  const destino = args[0] || 'sitefile.yaml';
+  if (existsSync(destino)) {
+    console.error(`erro: "${destino}" já existe — não vou sobrescrever.`);
+    process.exit(1);
+  }
+  const modelo = `# sitefile.yaml — site gerado pelo spec2site (v${VERSAO})
+# https://github.com/thiagopatzdorf/spec2site
+
+nome: Meu Site
+idioma: pt-BR
+descricao: Um site gerado pelo spec2site.
+# url: https://meusite.com  ← descomente pra gerar sitemap.xml
+tema:
+  cor: "#a05c2c"
+paginas:
+  - id: inicio
+    titulo: Início
+    blocos:
+      - tipo: hero
+        titulo: Bora fazer um site
+        texto: Só escrever blocos num YAML.
+        botao: Ver exemplos
+        link: /sobre.html
+      - tipo: texto
+        titulo: Como funciona
+        texto: Cada bloco vira uma seção do HTML. Hero, texto, lista, galeria, precos, faq, contato — é só colocar.
+      - tipo: contato
+        titulo: Bora?
+        texto: O repositório explica cada bloco.
+        botao: GitHub
+        link: https://github.com/thiagopatzdorf/spec2site
+  - id: sobre
+    titulo: Sobre
+    blocos:
+      - tipo: hero
+        titulo: Sobre o projeto
+        texto: Zero dependências, zero build — você escreve o sitefile, o gerador faz o resto.
+`;
+  writeFileSync(destino, modelo, 'utf8');
+  console.log(`✓ sitefile criado: ${destino}`);
+  console.log('  rode: npx spec2site ' + destino + ' --serve');
+  process.exit(0);
 }
 
+// ---------- help ----------
+if (!cmd || cmd === '--help' || cmd === '-h') {
+  console.log(`spec2site v${VERSAO} — um sitefile.yaml, um site estático. Zero dependências.`);
+  console.log('uso:');
+  console.log('  npx spec2site init [arquivo.yaml]     Cria um sitefile modelo');
+  console.log('  npx spec2site <sitefile.yaml> [opções]  Gera o site');
+  console.log('');
+  console.log('opções:');
+  console.log('  --saida pasta    Pasta de saída (padrão: dist/)');
+  console.log('  --url URL        URL base (pra sitemap.xml e robots.txt)');
+  console.log('  --serve          Sobe servidor HTTP embutido');
+  console.log('  --port PORTA     Porta do servidor (padrão: 8080, com --serve)');
+  process.exit(cmd ? 0 : 1);
+}
+
+// ---------- argumentos do gerador ----------
+const arquivo = cmd;
 let saida = 'dist';
 const idxSaida = args.indexOf('--saida');
 if (idxSaida !== -1 && args[idxSaida + 1]) saida = args[idxSaida + 1];
@@ -303,7 +362,7 @@ if (urlBase) {
   );
 }
 const resumo = CTX.usados.size ? `, ${CTX.usados.size} imagem(ns) em ${saida}/imagens/` : '';
-console.log(`spec2site v0.3.2 — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
+console.log(`spec2site v${VERSAO} — ${gerados.length} página(s) em ${saida}/: ${gerados.join(', ')}${resumo}`);
 if (urlBase) console.log(`sitemap.xml com ${spec.paginas.length} URL(s) — robots.txt aponta pra ele.`);
 else console.log('sitemap.xml não gerado: defina "url" no sitefile (ou passe --url https://teusite.com).');
 

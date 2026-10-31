@@ -1,3 +1,10 @@
+## 0.3.3 — 2026-10-31
+
+- `npx spec2site init [arquivo.yaml]`: scaffold de sitefile.yaml — cria um site
+  modelo com hero, texto, contato e página Sobre, pra começar sem digitar do zero.
+- CLI reorganizada com subcomandos: `init` e `--help`.
+- Preparação para v0.4: primeiro passo pro `npx spec2site`.
+
 ## 0.3.2 — 2026-10-30
 
 - `--serve` e `--port`: servidor HTTP embutido (zero dependências, Node `node:http`).

@@ -1,11 +1,24 @@
 {
   "name": "spec2site",
-  "version": "0.3.2",
-  "description": "Um sitefile.yaml, um site estático. Zero dependências.",
+  "version": "0.3.3",
+  "description": "Um sitefile.yaml, um site est\u00e1tico. Zero depend\u00eancias.",
   "type": "module",
-  "bin": { "spec2site": "./gerar.mjs" },
-  "engines": { "node": ">=18" },
+  "bin": {
+    "spec2site": "./gerar.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/thiagopatzdorf/spec2site" },
-  "keywords": ["site", "static-site-generator", "yaml", "zero-dependencies", "agentic"]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thiagopatzdorf/spec2site"
+  },
+  "keywords": [
+    "site",
+    "static-site-generator",
+    "yaml",
+    "zero-dependencies",
+    "agentic"
+  ]
 }
