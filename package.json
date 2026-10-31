@@ -1,6 +1,6 @@
 {
   "name": "spec2site",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Um sitefile.yaml, um site est\u00e1tico. Zero depend\u00eancias.",
   "type": "module",
   "bin": {
@@ -19,6 +19,18 @@
     "static-site-generator",
     "yaml",
     "zero-dependencies",
-    "agentic"
+    "agentic",
+    "cli"
+  ],
+  "homepage": "https://github.com/thiagopatzdorf/spec2site",
+  "bugs": {
+    "url": "https://github.com/thiagopatzdorf/spec2site/issues"
+  },
+  "files": [
+    "gerar.mjs",
+    "exemplos/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ]
 }

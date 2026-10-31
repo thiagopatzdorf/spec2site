@@ -1,3 +1,10 @@
+## 0.3.4 — 2026-10-31
+
+- `--version` / `-v`: mostra a versão e sai — pra saber qual spec2site você tem
+  sem ler o CHANGELOG.
+- `package.json` preparado pra npm: `homepage`, `bugs`, `files` e keyword `cli`.
+- Última preparação antes da publicação no npm (v0.4).
+
 ## 0.3.3 — 2026-10-31
 
 - `npx spec2site init [arquivo.yaml]`: scaffold de sitefile.yaml — cria um site

@@ -242,7 +242,13 @@ ${corpo}
 
 // ---------- CLI ----------
 const [cmd, ...args] = process.argv.slice(2);
-const VERSAO = '0.3.3';
+const VERSAO = '0.3.4';
+
+// ---------- versao ----------
+if (cmd === "--version" || cmd === "-v") {
+  console.log(VERSAO);
+  process.exit(0);
+}
 
 // ---------- subcomando: init (scaffold de sitefile.yaml) ----------
 if (cmd === 'init') {
