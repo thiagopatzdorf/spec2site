@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cafe-da-serra.exemplo.com/sitemap.xml

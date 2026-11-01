@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Início — Café da Serra</title>
+<meta name="description" content="Cafés de origem única, torra pequena toda semana e entrega em até 48 horas.">
+<meta property="og:title" content="Início — Café da Serra">
+<meta property="og:description" content="Cafés de origem única, torra pequena toda semana e entrega em até 48 horas.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20240%20240%22%3E%3Crect%20width%3D%22240%22%20height%3D%22240%22%20fill%3D%22%2523a05c2c%22%2F%3E%3Crect%20x%3D%2220%22%20y%3D%2220%22%20width%3D%22200%22%20height%3D%22200%22%20rx%3D%2212%22%20fill%3D%22none%22%20stroke%3D%22rgba(255%2C255%2C255%2C0.15)%22%20stroke-width%3D%222%22%2F%3E%3Ctext%20x%3D%22120%22%20y%3D%22175%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2252%22%20font-weight%3D%22bold%22%20fill%3D%22%23fff%22%20text-anchor%3D%22middle%22%3ECaf%C3%A9%20da%20Serra%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22215%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2220%22%20fill%3D%22rgba(255%2C255%2C255%2C0.8)%22%20text-anchor%3D%22middle%22%3ECaf%C3%A9s%20de%20origem%20%C3%BAnica%2C%20torra%20pequena%20toda%20semana%20e%20entrega%20em%20at%C3%A9%2048%20horas.%3C%2Ftext%3E%3C%2Fsvg%3E">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2032%2032%22%3E%3Crect%20width%3D%2232%22%20height%3D%2232%22%20rx%3D%226%22%20fill%3D%22%2523a05c2c%22%2F%3E%3Ctext%20x%3D%2216%22%20y%3D%2222%22%20font-family%3D%22system-ui%2Csans-serif%22%20font-size%3D%2220%22%20font-weight%3D%22bold%22%20fill%3D%22%23fff%22%20text-anchor%3D%22middle%22%3ES%3C%2Ftext%3E%3C%2Fsvg%3E">
+<style>
+  :root { --cor: #a05c2c; --cor2: #e07b39; --tinta: #1c1917; --fundo: #faf7f2; --cartao: #ffffff; --borda: #e7e0d8; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; color: var(--tinta); background: var(--fundo); line-height: 1.6; }
+  header { position: sticky; top: 0; background: rgba(250, 247, 242, 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--borda); }
+  nav { max-width: 960px; margin: 0 auto; display: flex; gap: 24px; align-items: center; padding: 16px 24px; flex-wrap: wrap; }
+  nav .marca { font-weight: 700; color: var(--cor); margin-right: auto; text-decoration: none; }
+  nav a { color: var(--tinta); text-decoration: none; opacity: 0.75; }
+  nav a:hover { opacity: 1; }
+  nav a.ativo { color: var(--cor); opacity: 1; font-weight: 600; }
+  main { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  .hero { padding: 96px 0 80px; max-width: 720px; }
+  .hero h1 { font-size: clamp(32px, 6vw, 56px); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
+  .hero p { font-size: 20px; opacity: 0.8; margin-bottom: 28px; }
+  .btn { display: inline-block; background: linear-gradient(135deg, var(--cor), var(--cor2)); color: #fff; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: 600; }
+  .btn:hover { filter: brightness(1.1); }
+  .secao { padding: 48px 0; }
+  .secao h2 { font-size: 28px; margin-bottom: 20px; letter-spacing: -0.01em; }
+  .secao h2::after { content: ''; display: block; width: 48px; height: 4px; border-radius: 2px; background: var(--cor2); margin-top: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .grid article { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; padding: 24px; }
+  .grid h3 { margin-bottom: 8px; }
+  .grid p { opacity: 0.8; }
+  .intro { opacity: 0.8; max-width: 640px; margin-bottom: 20px; }
+  .galeria { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .galeria-item { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; overflow: hidden; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .galeria-item:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(28, 25, 23, 0.12); }
+  .galeria-item img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .galeria-item figcaption { padding: 12px 16px; font-size: 14px; opacity: 0.75; }
+  .contato { text-align: center; background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 56px 24px; margin: 48px 0; }
+  footer { border-top: 1px solid var(--borda); margin-top: 48px; padding: 32px 24px; text-align: center; opacity: 0.6; font-size: 14px; }
+    .tabela-precos { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; align-items: start; margin-top: 20px; }
+  .plano-card { background: var(--cartao); border: 1px solid var(--borda); border-radius: 18px; padding: 32px 24px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
+  .plano-card.destaque { border-color: var(--cor); box-shadow: 0 0 0 2px var(--cor); position: relative; }
+  .plano-card.destaque::before { content: '★ Mais popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--cor); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 20px; white-space: nowrap; }
+  .plano-card h3 { font-size: 20px; }
+  .preco { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; }
+  .plano-card ul { list-style: none; padding: 0; text-align: left; }
+  .plano-card li { padding: 6px 0; border-bottom: 1px solid var(--borda); font-size: 14px; }
+  .plano-card li::before { content: '✓'; color: var(--cor); margin-right: 8px; font-weight: 700; }
+  .plano-card .btn { margin-top: auto; }
+  .faq { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+  .faq-item { background: var(--cartao); border: 1px solid var(--borda); border-radius: 12px; overflow: hidden; }
+  .faq-item summary { cursor: pointer; padding: 16px 20px; font-weight: 600; font-size: 16px; }
+  .faq-item summary:hover { background: rgba(0,0,0,0.02); }
+  .faq-item p { padding: 0 20px 16px; margin: 0; opacity: 0.8; font-size: 15px; }
+
+  @media (max-width: 600px) { .hero { padding: 64px 0 48px; } }
+  </style>
+</head>
+<body>
+<header><nav><a class="marca" href="index.html">Café da Serra</a><a href="index.html" class="ativo">Início</a><a href="sobre.html">Sobre</a></nav></header>
+<main>
+<section class="hero"><h1>Café colhido na serra, torrado hoje</h1><p>Grãos de origem única, torra pequena toda semana e entrega em até 48h na tua casa.</p><a class="btn" href="https://wa.me/5521999999999">Pedir pelo WhatsApp</a></section>
+<section class="secao"><h2>Por que a gente existe</h2><div class="grid"><article><h3>Origem rastreada</h3><p>Cada lote tem fazenda, altitude e data de colheita no rótulo.</p></article><article><h3>Torra pequena</h3><p>Torras de 12 kg no drum, no ponto, nunca queimadas.</p></article><article><h3>Entrega rápida</h3><p>Torrado na segunda, na tua casa até 48h depois.</p></article></div></section>
+<section class="secao"><h2>Da serra pra xícara</h2><div class="galeria"><figure class="galeria-item"><img src="imagens/colheita.svg" alt="Colheita seletiva, só cereja madura" loading="lazy"><figcaption>Colheita seletiva, só cereja madura</figcaption></figure><figure class="galeria-item"><img src="imagens/fazenda.svg" alt="Sítio Boa Vista, 1.200 m de altitude" loading="lazy"><figcaption>Sítio Boa Vista, 1.200 m de altitude</figcaption></figure><figure class="galeria-item"><img src="imagens/torra.svg" alt="Torra de 12 kg, toda segunda" loading="lazy"><figcaption>Torra de 12 kg, toda segunda</figcaption></figure><figure class="galeria-item"><img src="imagens/embalagem.svg" alt="Data da torra no rótulo, sempre" loading="lazy"><figcaption>Data da torra no rótulo, sempre</figcaption></figure><figure class="galeria-item"><img src="imagens/xicara.svg" alt="Descanso de 7 dias antes de moer" loading="lazy"><figcaption>Descanso de 7 dias antes de moer</figcaption></figure><figure class="galeria-item"><img src="imagens/entrega.svg" alt="Na tua casa em até 48h" loading="lazy"><figcaption>Na tua casa em até 48h</figcaption></figure></div></section>
+<section class="secao precos"><h2>Planos mensais</h2><p class="intro">Café fresco entregue toda semana. Cancele quando quiser.</p><div class="tabela-precos"><article class="plano-card"><h3>Experimental</h3><span class="preco">R$ 39/mês</span><ul><li>250 g por semana</li><li>1 origem à sua escolha</li><li>Torra clara, média ou escura</li><li>Frete incluso (regiões Sul e Sudeste)</li><li>Cancele quando quiser</li></ul><a class="btn" href="https://wa.me/5521999999999">Quero começar</a></article><article class="plano-card destaque"><h3>Assinatura</h3><span class="preco">R$ 69/mês</span><ul><li>500 g por semana</li><li>2 origens diferentes</li><li>Grãos ou moído (sua escolha)</li><li>Frete incluso (Brasil todo)</li><li>Desconto em presentes</li></ul><a class="btn" href="https://wa.me/5521999999999">Assinar agora</a></article><article class="plano-card"><h3>Corporativo</h3><span class="preco">R$ 199/mês</span><ul><li>1 kg por semana</li><li>Até 4 origens diferentes</li><li>Embalagens personalizadas</li><li>Frete incluso (Brasil todo)</li><li>Prioridade no suporte</li></ul><a class="btn" href="https://wa.me/5521999999999">Fale com a gente</a></article></div></section>
+<section class="secao contato"><h2>Assine o plano mensal</h2><p>A partir de R$ 69/mês, café fresco toda semana. Cancele quando quiser.</p><a class="btn" href="https://wa.me/5521999999999">Falar no WhatsApp</a></section>
+</main>
+<footer>Café da Serra · feito com <a href="https://github.com/thiagopatzdorf/spec2site">spec2site</a></footer>
+</body>
+</html>
