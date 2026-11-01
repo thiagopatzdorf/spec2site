@@ -1,7 +1,7 @@
 {
-  "name": "spec2site",
+  "name": "@thiagopatzdorf/spec2site",
   "version": "0.3.5",
-  "description": "Um sitefile.yaml, um site est\u00e1tico. Zero depend\u00eancias.",
+  "description": "Um sitefile.yaml, um site estático. Zero dependências.",
   "type": "module",
   "bin": {
     "spec2site": "./gerar.mjs"

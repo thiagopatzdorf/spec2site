@@ -1,7 +1,10 @@
-## 0.3.6 — 2026-11-01
+## 0.4.0 — 2026-11-01
 
-- Screenshot real do site gerado (cafeteria, 1200×675) publicada no LinkedIn.
-- `docs/turno_01112026.png` — screenshot browser do site cafeteria.
+- Publicação no npm: `@thiagopatzdorf/spec2site@0.4.0` (scoped pra evitar conflito de nome).
+- `package.json` com `name: "@thiagopatzdorf/spec2site"`, binário, engines, homepage, bugs, files e keywords.
+- `npx @thiagopatzdorf/spec2site init sitefile.yaml --serve` funciona direto, sem clonar o repo.
+
+## 0.3.6 — 2026-11-01
 - Preparação pro npm publish: `package.json` validado, `.npmignore` pronto, dry-run OK.
 
 ## 0.3.5 — 2026-10-31
