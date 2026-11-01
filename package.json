@@ -31,6 +31,10 @@
     "exemplos/",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
-  ]
+    "CHANGELOG.md",
+    "deploy.mjs"
+  ],
+  "scripts": {
+    "deploy": "node deploy.mjs exemplos/cafeteria.yaml dist"
+  }
 }

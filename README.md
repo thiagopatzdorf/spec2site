@@ -66,7 +66,7 @@ Parser YAML embutido, feito sob medida pro sitefile: mapas aninhados por indenta
 
 - v0.2 — ✓ bloco galeria · ✓ `sitemap.xml` · ✓ favicon/OG image
 - v0.3 (concluído) — ✓ `--serve` · ✓ `init` · ✓ `--version`
-- v0.4 (em andamento) — `npx spec2site` no npm, deploy num comando
+- v0.4 (concluído) — ✓ npm publish (@thiagopatzdorf/spec2site) · ✓ `npm run deploy` para GitHub Pages
 - v1.0 — formato do sitefile congelado e documentado
 
 ## Licença

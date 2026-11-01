@@ -1,3 +1,10 @@
+## 0.4.1 — 2026-11-01
+
+- `npm run deploy` (ou `node deploy.mjs`) — um comando pra gerar o site e fazer deploy ao GitHub Pages.
+- `deploy.mjs`: reutiliza `gerar.mjs`, roda o build, sobe os arquivos pra `gh-pages` com fallback via curl.
+- `package.json` atualizado: script `deploy` + `deploy.mjs` no `files`.
+- Site ao vivo em https://thiagopatzdorf.github.io/spec2site/
+
 ## 0.4.0 — 2026-11-01
 
 - Publicação no npm: `@thiagopatzdorf/spec2site@0.4.0` (scoped pra evitar conflito de nome).
