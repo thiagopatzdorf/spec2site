@@ -69,6 +69,174 @@ Parser YAML embutido, feito sob medida pro sitefile: mapas aninhados por indenta
 - v0.4 (concluído) — ✓ npm publish (@thiagopatzdorf/spec2site) · ✓ `npm run deploy` para GitHub Pages
 - v1.0 — formato do sitefile congelado e documentado
 
+
+---
+
+## Referência do sitefile
+
+Este documento descreve **cada campo** do sitefile e **cada tipo de bloco** que o gerador suporta. A versão do formato é `>=0.2` (congelada a partir de v0.2).
+
+### Topo do arquivo
+
+```yaml
+nome: Meu Site            # nome exibido no <title> e header (obrigatório)
+idioma: pt-BR             # código de idioma (padrão: pt-BR)
+descricao: Meu site estático  # texto para meta description
+url: https://meusite.com    # URL base — ativa sitemap.xml e robots.txt
+tema:
+  cor: "#2563eb"           # cor primária (hex)
+  cor2: "#7c3aed"          # cor secundária (opcional)
+```
+
+### Páginas
+
+Cada página gera um arquivo HTML separada (`<id>.html`). Mínimo: 1 página.
+
+```yaml
+paginas:
+  - id: home                # id único da página (obrigatório)
+    titulo: Home            # título da aba do navegador
+    blocos:                 # lista de blocos (obrigatório)
+      # blocos aqui
+```
+
+### Blocos — referência completa
+
+#### `hero`
+O bloco de destaque inicial.
+
+```yaml
+- tipo: hero
+  titulo: Bem-vindo!
+  texto: Um subtítulo descritivo.
+  botao: Saiba mais
+  link: https://exemplo.com
+```
+
+Campos: `titulo` (obrigatório), `texto` (opcional), `botao` (opcional), `link` (opcional, requer `botao`).
+
+#### `texto`
+Seção com um ou mais parágrafos.
+
+```yaml
+- tipo: texto
+  titulo: Sobre nós
+  paragrafos:
+    - Primeiro parágrafo.
+    - Segundo parágrafo.
+```
+
+Campos: `titulo` (opcional), `paragrafos` (obrigatório, lista de strings).
+
+#### `lista`
+Grade de itens com título e texto.
+
+```yaml
+- tipo: lista
+  titulo: Recursos
+  itens:
+    - titulo: Rápido
+      texto: Zero dependências, site estático puro.
+    - titulo: Simples
+      texto: Um arquivo YAML, nada de build.
+```
+
+Campos: `titulo` (opcional), `itens` (obrigatório, lista com `titulo` + `texto`).
+
+#### `galeria`
+Grade de imagens com legenda.
+
+```yaml
+- tipo: galeria
+  titulo: Nosso time
+  itens:
+    - imagem: img/foto1.svg
+      legenda: Ana, fundadora
+    - imagem: https://exemplo.com/foto2.png
+      legenda: Carlos, dev
+```
+
+Campos: `titulo` (opcional), `itens` (obrigatório). `imagem` aceita caminho local (vira asset) ou URL.
+
+#### `precos`
+Tabela de planos em cards.
+
+```yaml
+- tipo: precos
+  titulo: Planos
+  intro: Escolha o ideal.
+  planos:
+    - plano: Básico
+      preco: R$ 29/mês
+      recursos:
+        - 1 site
+        - Suporte por email
+      botao: Assinar
+      link: https://wa.me/123
+    - plano: Pro
+      destaque: true
+      preco: R$ 59/mês
+      recursos:
+        - 5 sites
+        - Suporte prioritário
+      botao: Assinar agora
+      link: https://wa.me/456
+```
+
+Campos: `titulo` (opcional), `intro` (opcional), `planos` (obrigatório, lista com `plano`, `preco`, `recursos` (lista), `destaque` (booleano, opcional), `botao` (opcional), `link` (opcional)).
+
+#### `faq`
+Perguntas frequentes expansíveis — zero JavaScript.
+
+```yaml
+- tipo: faq
+  titulo: Dúvidas
+  perguntas:
+    - pergunta: Qual o prazo?
+      resposta: Entregamos em até 48h.
+    - pergunta: Tem garantia?
+      resposta: Sim, 30 dias.
+```
+
+Campos: `titulo` (opcional), `perguntas` (obrigatório, lista com `pergunta` + `resposta`).
+
+#### `contato`
+Chamada final com botão — ideal no fim do site.
+
+```yaml
+- tipo: contato
+  titulo: Vamos conversar
+  texto: Entre em contato pelo WhatsApp.
+  botao: WhatsApp
+  link: https://wa.me/5521999999999
+```
+
+Campos: `titulo` (opcional), `texto` (opcional), `botao` (obrigatório se `link` presente), `link` (opcional).
+
+### Comandos
+
+```bash
+# Gerar site a partir de um sitefile
+node gerar.mjs sitefile.yaml --saida dist
+
+# Gerar e servir localmente
+node gerar.mjs sitefile.yaml --serve
+
+# Inicializar um novo sitefile
+npx @thiagopatzdorf/spec2site init sitefile.yaml --serve
+```
+
+### Parser
+
+Parser YAML embutido — não depende de `js-yaml` ou qualquer biblioteca externa. Aceita:
+- Mapas aninhados por indentação (2 espaços)
+- Listas com `-`
+- Strings (nuas ou entre aspas duplas)
+- Números e booleanos (`true`/`false`)
+- Comentários em linha própria (`#` no começo da linha)
+
+Limites atuais: sem âncoras YAML, sem multiline, sem aliases.
+
 ## Licença
 
 MIT. Veja [LICENSE](LICENSE).

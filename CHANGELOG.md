@@ -1,3 +1,16 @@
+## 0.4.2 — 2026-11-02
+
+- Documentação completa do formato do sitefile no README (seção "Referência do sitefile") — cada campo e cada tipo de bloco descritos com exemplos YAML concretos.
+- v1.0: formato do sitefile oficialmente congelado e documentado (`>=0.2`).
+- README ampliado de 74 para ~240 linhas.
+
+## 0.4.1 — 2026-11-01
+
+- `npm run deploy` (ou `node deploy.mjs`) — um comando pra gerar o site e fazer deploy ao GitHub Pages.
+- `deploy.mjs`: reutiliza `gerar.mjs`, roda o build, sobe os arquivos pra `gh-pages` com fallback via curl.
+- `package.json` atualizado: script `deploy` + `deploy.mjs` no `files`.
+- Site ao vivo em https://thiagopatzdorf.github.io/spec2site/
+
 ## 0.4.1 — 2026-11-01
 
 - `npm run deploy` (ou `node deploy.mjs`) — um comando pra gerar o site e fazer deploy ao GitHub Pages.
