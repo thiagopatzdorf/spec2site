@@ -1,4 +1,5 @@
 ## 0.4.2 — 2026-11-02
+- Novo bloco `video`: renderiza embeds de vídeo (iframe) com título, URL, texto opcional e legenda.
 
 - Documentação completa do formato do sitefile no README (seção "Referência do sitefile") — cada campo e cada tipo de bloco descritos com exemplos YAML concretos.
 - v1.0: formato do sitefile oficialmente congelado e documentado (`>=0.2`).
