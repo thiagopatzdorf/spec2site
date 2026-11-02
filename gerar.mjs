@@ -149,6 +149,7 @@ const BLOCOS = {
   contato: (b) => `<section class="secao contato">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.texto ? `<p>${esc(b.texto)}</p>` : ''}${b.link ? `<a class="btn" href="${esc(b.link)}">${esc(b.botao || 'Fale com a gente')}</a>` : ''}</section>`,
   precos: (b) => `<section class="secao precos">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.intro ? `<p class="intro">${esc(b.intro)}</p>` : ''}<div class="tabela-precos">${(b.planos || []).map((pl) => `<article class="plano-card${pl.destaque ? ' destaque' : ''}"><h3>${esc(pl.plano || '')}</h3><span class="preco">${esc(pl.preco || '')}</span><ul>${(pl.recursos || []).map((r) => `<li>${esc(r)}</li>`).join('')}</ul>${pl.botao && pl.link ? `<a class="btn" href="${esc(pl.link)}">${esc(pl.botao)}</a>` : ''}</article>`).join('')}</div></section>`,
   faq: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}<div class="faq">${(b.perguntas || []).map((q) => `<details class="faq-item"><summary>${esc(q.pergunta || '')}</summary><p>${esc(q.resposta || '')}</p></details>`).join('')}</div></section>`,
+  video: (b) => `<section class="secao"><h2>${esc(b.titulo || "")}</h2>${b.texto ? `<p class="intro">${esc(b.texto)}</p>` : ""}<iframe class="video-embed" src="${esc(b.url)}" title="${esc(b.titulo || "")}" frameborder="0" allowfullscreen></iframe>${b.legenda ? `<p class="legenda">${esc(b.legenda)}</p>` : ""}</section>`,
 };
 
 function css(spec) {
