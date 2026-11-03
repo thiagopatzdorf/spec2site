@@ -150,6 +150,12 @@ const BLOCOS = {
   precos: (b) => `<section class="secao precos">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.intro ? `<p class="intro">${esc(b.intro)}</p>` : ''}<div class="tabela-precos">${(b.planos || []).map((pl) => `<article class="plano-card${pl.destaque ? ' destaque' : ''}"><h3>${esc(pl.plano || '')}</h3><span class="preco">${esc(pl.preco || '')}</span><ul>${(pl.recursos || []).map((r) => `<li>${esc(r)}</li>`).join('')}</ul>${pl.botao && pl.link ? `<a class="btn" href="${esc(pl.link)}">${esc(pl.botao)}</a>` : ''}</article>`).join('')}</div></section>`,
   faq: (b) => `<section class="secao">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}<div class="faq">${(b.perguntas || []).map((q) => `<details class="faq-item"><summary>${esc(q.pergunta || '')}</summary><p>${esc(q.resposta || '')}</p></details>`).join('')}</div></section>`,
   video: (b) => `<section class="secao"><h2>${esc(b.titulo || "")}</h2>${b.texto ? `<p class="intro">${esc(b.texto)}</p>` : ""}<iframe class="video-embed" src="${esc(b.url)}" title="${esc(b.titulo || "")}" frameborder="0" allowfullscreen></iframe>${b.legenda ? `<p class="legenda">${esc(b.legenda)}</p>` : ""}</section>`,
+  mapa: (b) => `<section class="secao mapa">${b.titulo ? `<h2>${esc(b.titulo)}</h2>` : ''}${b.texto ? `<p class="intro">${esc(b.texto)}</p>` : ''}<div class="mapa-container"><div class="mapa-canvas"><svg viewBox="0 0 800 400" fill="none"><rect width="800" height="400" fill="var(--fundo)"/><circle cx="400" cy="200" r="120" fill="var(--cor)" opacity="0.15"/><circle cx="400" cy="200" r="60" fill="var(--cor)" opacity="0.25"/><path d="M400 200 Q450 150 520 160 Q600 170 580 240 Q560 310 460 300 Q360 290 340 220 Q320 150 400 200Z" fill="var(--cor)" opacity="0.12" stroke="var(--cor)"/><circle cx="400" cy="200" r="8" fill="var(--cor)"/><circle cx="520" cy="160" r="6" fill="var(--cor2)"/><circle cx="340" cy="220" r="6" fill="var(--cor2)"/><text x="400" y="225" text-anchor="middle" font-size="12" fill="var(--tinta)">${esc(b.titulo || 'Mapa')}</text><text x="520" y="150" text-anchor="middle" font-size="10" fill="var(--cor2)">Ponto 1</text><text x="340" y="240" text-anchor="middle" font-size="10" fill="var(--cor2)">Ponto 2</text></svg></div>${b.endereco ? `<p class="mapa-endereco">${esc(b.endereco)}</p>` : ''}</div></section>`,
+  depoimento: (b) => {
+    const itens = b.itens || b.depoimentos || (b.nome ? [b] : []);
+    return `<section class="secao depoimento"><h2>${esc(b.titulo || "Depoimentos")}</h2><div class="depoimentos">${itens.map((d) => `<blockquote class="depoimento-item"><p>${esc(d.texto || "")}</p><footer>\u2014${esc(d.nome || "")}${d.avaliacao ? " <span class=\"estrelas\">" + "\u2605".repeat(d.avaliacao) + "\u2606".repeat(Math.max(0, 5 - d.avaliacao)) + "</span>" : ""}</footer></blockquote>`).join("")}</div></section>`;
+  },
+
 };
 
 function css(spec) {
@@ -243,7 +249,7 @@ ${corpo}
 
 // ---------- CLI ----------
 const [cmd, ...args] = process.argv.slice(2);
-const VERSAO = '0.3.5';
+const VERSAO = '0.4.2';
 
 // ---------- versao ----------
 if (cmd === "--version" || cmd === "-v") {

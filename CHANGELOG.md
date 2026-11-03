@@ -1,4 +1,9 @@
-## 0.4.2 — 2026-11-02
+## 0.4.3 — 2026-11-03
+
+- Novo bloco `depoimento`: renderiza testemunhos de clientes com nome, texto e avaliação em estrelas. Aceita um único depoimento ou lista de depoimentos.
+- `VERSAO` corrigida de `0.3.6` para `0.4.2` no gerar.mjs (o CHANGELOG já dizia 0.4.2).
+- Exemplo `depoimento` adicionado ao `exemplos/cafeteria.yaml`.
+
 - Novo bloco `video`: renderiza embeds de vídeo (iframe) com título, URL, texto opcional e legenda.
 
 - Documentação completa do formato do sitefile no README (seção "Referência do sitefile") — cada campo e cada tipo de bloco descritos com exemplos YAML concretos.

@@ -78,6 +78,15 @@ paginas:
         texto: A partir de R$ 69/mês, café fresco toda semana. Cancele quando quiser.
         botao: Falar no WhatsApp
         link: https://wa.me/5521999999999
+      - tipo: mapa
+        titulo: Onde estamos
+        texto: Nossa torra acontece no coração da serra mineira.
+        endereco: Serra da Mantiqueira, 1.200m de altitude
+      - tipo: video
+        titulo: Conheça nossa torra
+        texto: Veja o processo em 2 minutos.
+        url: https://www.youtube.com/embed/dQw4w9WgXcQ
+        legenda: Torrador artesanal em ação
   - id: sobre
     titulo: Sobre
     blocos:
@@ -106,3 +115,7 @@ paginas:
             resposta: Torramos na segunda, despachamos na terça e chega em até 48h dependendo da sua região. O frete é calculado no fechamento.
           - pergunta: Dá pra cancelar a assinatura?
             resposta: Sim, a qualquer momento, sem multa. O próximo ciclo simplesmente não é cobrado. Sem burocracia.
+      - tipo: depoimento
+        nome: Maria Souza
+        texto: O café chega sempre fresco, com data da torra no rótulo. É diferente de tudo que já provei.
+        avaliacao: 5
