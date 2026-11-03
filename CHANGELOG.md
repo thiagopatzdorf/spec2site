@@ -1,4 +1,11 @@
 ## 0.4.3 — 2026-11-03
+## 0.4.5 — 2026-11-03
+
+- Exemplo  expandido para lista de 3 depoimentos com  — valida o suporte do parser a múltiplos testemunhos no mesmo bloco.
+- Adicionado  ao bloco depoimentos.
+- Novos depoimentos: Carlos Mendes (4 estrelas) e Ana Ribeiro (5 estrelas).
+
+
 ## 0.4.4 — 2026-11-03
 
 - ROADMAP no README atualizado: v1.0 marcado como concluído (✓).

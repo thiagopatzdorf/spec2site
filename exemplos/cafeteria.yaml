@@ -116,6 +116,14 @@ paginas:
           - pergunta: Dá pra cancelar a assinatura?
             resposta: Sim, a qualquer momento, sem multa. O próximo ciclo simplesmente não é cobrado. Sem burocracia.
       - tipo: depoimento
-        nome: Maria Souza
-        texto: O café chega sempre fresco, com data da torra no rótulo. É diferente de tudo que já provei.
-        avaliacao: 5
+        titulo: O que dizem sobre nós
+        itens:
+          - nome: Maria Souza
+            texto: O café chega sempre fresco, com data da torra no rótulo. É diferente de tudo que já provei.
+            avaliacao: 5
+          - nome: Carlos Mendes
+            texto: A assinatura corporativa transformou nosso escritório. Todo mundo tem café fresco toda semana.
+            avaliacao: 4
+          - nome: Ana Ribeiro
+            texto: Experimentei o plano Experimental e virei fã. O ponto de torra customizável faz toda diferença.
+            avaliacao: 5
