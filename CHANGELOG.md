@@ -1,4 +1,9 @@
 ## 0.4.3 — 2026-11-03
+## 0.4.4 — 2026-11-03
+
+- ROADMAP no README atualizado: v1.0 marcado como concluído (✓).
+
+
 
 - Novo bloco `depoimento`: renderiza testemunhos de clientes com nome, texto e avaliação em estrelas. Aceita um único depoimento ou lista de depoimentos.
 - `VERSAO` corrigida de `0.3.6` para `0.4.2` no gerar.mjs (o CHANGELOG já dizia 0.4.2).
