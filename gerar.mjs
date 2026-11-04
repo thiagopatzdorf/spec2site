@@ -213,6 +213,9 @@ function css(spec) {
   .depoimento-item p { font-size: 15px; line-height: 1.7; opacity: 0.85; margin-bottom: 12px; }
   .depoimento-item footer { font-size: 14px; font-weight: 600; color: var(--cor); }
   .estrelas { color: var(--cor2); font-size: 14px; }
+  .mapa-container { max-width: 800px; margin: 0 auto; }
+  .mapa-canvas { width: 100%; height: auto; border-radius: 16px; overflow: hidden; }
+  .mapa-endereco { text-align: center; margin-top: 16px; font-size: 15px; opacity: 0.8; }
   @media (max-width: 600px) { .hero { padding: 64px 0 48px; } }
   `;
 }

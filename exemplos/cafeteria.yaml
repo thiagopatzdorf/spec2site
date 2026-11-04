@@ -127,3 +127,7 @@ paginas:
           - nome: Ana Ribeiro
             texto: Experimentei o plano Experimental e virei fã. O ponto de torra customizável faz toda diferença.
             avaliacao: 5
+      - tipo: mapa
+        titulo: Nossa localização
+        endereco: Rua da Serra, 42 — São Paulo, SP
+        texto: Passa aqui pra tomar um café e conhecer a torradeira.

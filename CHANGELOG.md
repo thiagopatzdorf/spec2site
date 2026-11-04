@@ -1,5 +1,10 @@
 ## 0.4.6 — 2026-11-04
 
+## 0.4.7 — 2026-11-04
+
+- CSS dedicado para bloco `mapa`: container centralizado com largura 800px, canvas SVG responsivo (width: 100%, border-radius 16px) e estilo para endereço.
+- Exemplo `mapa` adicionado ao `exemplos/cafeteria.yaml`.
+
 - CSS dedicado para blocos `depoimento`: estilização com card fundo claro, padding, borda suave, estrelas coloridas e layout em coluna.
 - Blocos de testemunho agora renderizam com visual consistente e acessível no HTML gerado.
 
