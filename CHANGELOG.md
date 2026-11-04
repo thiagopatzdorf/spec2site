@@ -1,4 +1,9 @@
-## 0.4.3 — 2026-11-03
+## 0.4.6 — 2026-11-04
+
+- CSS dedicado para blocos `depoimento`: estilização com card fundo claro, padding, borda suave, estrelas coloridas e layout em coluna.
+- Blocos de testemunho agora renderizam com visual consistente e acessível no HTML gerado.
+
+---
 ## 0.4.5 — 2026-11-03
 
 - Exemplo  expandido para lista de 3 depoimentos com  — valida o suporte do parser a múltiplos testemunhos no mesmo bloco.

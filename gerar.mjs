@@ -208,6 +208,11 @@ function css(spec) {
   .faq-item summary:hover { background: rgba(0,0,0,0.02); }
   .faq-item p { padding: 0 20px 16px; margin: 0; opacity: 0.8; font-size: 15px; }
 
+  .depoimentos { display: flex; flex-direction: column; gap: 20px; max-width: 640px; margin: 0 auto; }
+  .depoimento-item { background: var(--cartao); border: 1px solid var(--borda); border-radius: 14px; padding: 24px; }
+  .depoimento-item p { font-size: 15px; line-height: 1.7; opacity: 0.85; margin-bottom: 12px; }
+  .depoimento-item footer { font-size: 14px; font-weight: 600; color: var(--cor); }
+  .estrelas { color: var(--cor2); font-size: 14px; }
   @media (max-width: 600px) { .hero { padding: 64px 0 48px; } }
   `;
 }
