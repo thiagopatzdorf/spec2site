@@ -22,7 +22,14 @@ function parseYAML(texto) {
   for (const bruta of texto.split(/\r?\n/)) {
     const limpa = bruta.trim();
     if (!limpa || limpa.startsWith('#')) continue;
-    linhas.push({ indent: bruta.length - bruta.trimStart().length, texto: limpa });
+    const ind = bruta.length - bruta.trimStart().length;
+    // Multiline: if indent > prev indent, no key: pattern, not list item
+    const prev = linhas.length ? linhas[linhas.length - 1] : null;
+    if (prev && ind > prev.indent && limpa && !/^([A-Za-z0-9_-]+):/.test(limpa) && !/^[- ]/.test(limpa)) {
+      prev.texto = prev.texto + ' ' + limpa;
+    } else {
+      linhas.push({ indent: ind, texto: limpa });
+    }
   }
   if (!linhas.length) throw new Error('sitefile vazio');
 
@@ -257,7 +264,7 @@ ${corpo}
 
 // ---------- CLI ----------
 const [cmd, ...args] = process.argv.slice(2);
-const VERSAO = '0.4.2';
+const VERSAO = '0.4.7';
 
 // ---------- versao ----------
 if (cmd === "--version" || cmd === "-v") {
