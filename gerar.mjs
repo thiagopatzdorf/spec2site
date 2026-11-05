@@ -30,7 +30,7 @@ function preprocessarMultiline(texto) {
         if (proxInd > ind) { valorLines.push(prox.trim()); j++; } else { break; }
       }
       const valor = modo === '>' ? valorLines.join(' ') : valorLines.join('\n');
-      resultado.push({ indent: ind, texto: chave + ': ' + JSON.stringify(valor) });
+      resultado.push({ indent: ind, texto: mKeyBlock[1] + ': ' + JSON.stringify(valor) });
       i = j; continue;
     }
     resultado.push({ indent: ind, texto: trim });
@@ -41,7 +41,7 @@ function preprocessarMultiline(texto) {
 
 function parseEscalar(s) {
   s = s.trim();
-  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) return s.slice(1, -1);
+  if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) { s = s.slice(1, -1); s = s.replace(/\\"/g, '"'); return s; }
   if (s === 'true') return true;
   if (s === 'false') return false;
   if (/^-?\d+(\.\d+)?$/.test(s)) return Number(s);

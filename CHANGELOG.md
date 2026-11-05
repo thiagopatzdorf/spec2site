@@ -29,3 +29,9 @@
 
 ## 0.4.4 — 2026-11-03
 
+
+---
+
+## 0.4.9 — 2026-11-05
+
+- Parser: correção do suporte a strings com aspas duplas internas — `parseEscalar` agora faz unescape de `\"` para `"` após remover as aspas externas. Também corrigido referência a `chave` em `preprocessarMultiline` (antes usava variável global implícita).
