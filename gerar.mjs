@@ -7,7 +7,38 @@ import { join, dirname } from 'node:path';
 
 // ---------- parser YAML mínimo (subconjunto do sitefile) ----------
 // Suporta: mapas aninhados por indentação, listas com "-", strings
-// (nuas ou entre aspas), números, booleanos e comentários em linha própria.
+// (nuas ou entre aspas), números, booleanos, strings multiline (|, >)
+// e âncoras (chaves repetidas em profundidades diferentes).
+
+function preprocessarMultiline(texto) {
+  const linhas = texto.split(/\r?\n/);
+  const resultado = [];
+  let i = 0;
+  while (i < linhas.length) {
+    const linha = linhas[i];
+    const ind = linha.length - linha.trimStart().length;
+    const trim = linha.trim();
+    const mKeyBlock = trim.match(/^([A-Za-z0-9_-]+):\s*([|>])/);
+    if (mKeyBlock && i + 1 < linhas.length) {
+      const modo = mKeyBlock[2];
+      const valorLines = [];
+      let j = i + 1;
+      while (j < linhas.length) {
+        const prox = linhas[j];
+        const proxInd = prox.length - prox.trimStart().length;
+        if (prox.trim() === '') { j++; continue; }
+        if (proxInd > ind) { valorLines.push(prox.trim()); j++; } else { break; }
+      }
+      const valor = modo === '>' ? valorLines.join(' ') : valorLines.join('\n');
+      resultado.push({ indent: ind, texto: chave + ': ' + JSON.stringify(valor) });
+      i = j; continue;
+    }
+    resultado.push({ indent: ind, texto: trim });
+    i++;
+  }
+  return resultado;
+}
+
 function parseEscalar(s) {
   s = s.trim();
   if ((s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'"))) return s.slice(1, -1);
@@ -18,21 +49,7 @@ function parseEscalar(s) {
 }
 
 function parseYAML(texto) {
-  const linhas = [];
-  for (const bruta of texto.split(/\r?\n/)) {
-    const limpa = bruta.trim();
-    if (!limpa || limpa.startsWith('#')) continue;
-    const ind = bruta.length - bruta.trimStart().length;
-    // Multiline: if indent > prev indent, no key: pattern, not list item
-    const prev = linhas.length ? linhas[linhas.length - 1] : null;
-    if (prev && ind > prev.indent && limpa && !/^([A-Za-z0-9_-]+):/.test(limpa) && !/^[- ]/.test(limpa)) {
-      prev.texto = prev.texto + ' ' + limpa;
-    } else {
-      linhas.push({ indent: ind, texto: limpa });
-    }
-  }
-  if (!linhas.length) throw new Error('sitefile vazio');
-
+  const linhas = preprocessarMultiline(texto);
   let i = 0;
 
   function parseBloco() {
@@ -42,9 +59,11 @@ function parseYAML(texto) {
   function parseMapa() {
     const indent = linhas[i].indent;
     const obj = {};
-    while (i < linhas.length && linhas[i].indent === indent && !linhas[i].texto.startsWith('- ')) {
+    while (i < linhas.length && linhas[i].indent >= indent && !linhas[i].texto.startsWith('- ')) {
+      if (linhas[i].indent > indent && Object.keys(obj).length > 0) { i++; continue; }
+      if (linhas[i].indent < indent) break;
       const m = linhas[i].texto.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
-      if (!m) throw new Error(`linha não entendida: "${linhas[i].texto}"`);
+      if (!m) { i++; continue; }
       const chave = m[1];
       const resto = m[2].trim();
       i += 1;
@@ -63,21 +82,12 @@ function parseYAML(texto) {
     while (i < linhas.length && linhas[i].indent === indent && (linhas[i].texto.startsWith('- ') || linhas[i].texto === '-')) {
       const resto = linhas[i].texto.replace(/^-\s*/, '');
       const m = resto.match(/^([A-Za-z0-9_-]+):\s*(.*)$/);
-      if (!m) {
-        arr.push(parseEscalar(resto));
-        i += 1;
-        continue;
-      }
+      if (!m) { arr.push(parseEscalar(resto)); i += 1; continue; }
       const chave = m[1];
       const valor = m[2].trim();
       const item = {};
-      if (valor === '') {
-        i += 1;
-        item[chave] = i < linhas.length && linhas[i].indent > indent ? parseBloco() : null;
-      } else {
-        item[chave] = parseEscalar(valor);
-        i += 1;
-      }
+      if (valor === '') { i += 1; item[chave] = i < linhas.length && linhas[i].indent > indent ? parseBloco() : null; }
+      else { item[chave] = parseEscalar(valor); i += 1; }
       if (i < linhas.length && linhas[i].indent > indent) Object.assign(item, parseMapa());
       arr.push(item);
     }
@@ -110,20 +120,18 @@ const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').
 // ---------- SVGs (favicon e OG image inline) ----------
 function gerarFaviconSVG(cor) {
   const c = encodeURIComponent(cor);
-  return '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><rect width=\"32\" height=\"32\" rx=\"6\" fill=\"' + c + '\"/><text x=\"16\" y=\"22\" font-family=\"system-ui,sans-serif\" font-size=\"20\" font-weight=\"bold\" fill=\"#fff\" text-anchor=\"middle\">S</text></svg>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" fill="' + c + '"/><text x="16" y="22" font-family="system-ui,sans-serif" font-size="20" font-weight="bold" fill="#fff" text-anchor="middle">S</text></svg>';
 }
 function gerarOGImageSVG(nome, descricao, cor) {
   const n = esc(nome || 'spec2site');
   const d = esc(descricao || '');
   const c = encodeURIComponent(cor);
-  let txt = '<text x=\"120\" y=\"175\" font-family=\"system-ui,sans-serif\" font-size=\"52\" font-weight=\"bold\" fill=\"#fff\" text-anchor=\"middle\">' + n + '</text>';
-  if (d) txt += '<text x=\"120\" y=\"215\" font-family=\"system-ui,sans-serif\" font-size=\"20\" fill=\"rgba(255,255,255,0.8)\" text-anchor=\"middle\">' + d + '</text>';
-  return '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 240 240\"><rect width=\"240\" height=\"240\" fill=\"' + c + '\"/><rect x=\"20\" y=\"20\" width=\"200\" height=\"200\" rx=\"12\" fill=\"none\" stroke=\"rgba(255,255,255,0.15)\" stroke-width=\"2\"/>' + txt + '</svg>';
+  let txt = '<text x="120" y="175" font-family="system-ui,sans-serif" font-size="52" font-weight="bold" fill="#fff" text-anchor="middle">' + n + '</text>';
+  if (d) txt += '<text x="120" y="215" font-family="system-ui,sans-serif" font-size="20" fill="rgba(255,255,255,0.8)" text-anchor="middle">' + d + '</text>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><rect width="240" height="240" fill="' + c + '"/><rect x="20" y="20" width="200" height="200" rx="12" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>' + txt + '</svg>';
 }
 
 // ---------- imagens ----------
-// Caminho relativo ao sitefile é copiado pra <saida>/imagens/ (nome
-// preservado, com sufixo se o nome repetir). URL http(s) e data: direto.
 const CTX = { saida: 'dist', base: '.', mapa: new Map(), usados: new Set() };
 
 function resolverImagem(caminho) {
@@ -162,7 +170,6 @@ const BLOCOS = {
     const itens = b.itens || b.depoimentos || (b.nome ? [b] : []);
     return `<section class="secao depoimento"><h2>${esc(b.titulo || "Depoimentos")}</h2><div class="depoimentos">${itens.map((d) => `<blockquote class="depoimento-item"><p>${esc(d.texto || "")}</p><footer>\u2014${esc(d.nome || "")}${d.avaliacao ? " <span class=\"estrelas\">" + "\u2605".repeat(d.avaliacao) + "\u2606".repeat(Math.max(0, 5 - d.avaliacao)) + "</span>" : ""}</footer></blockquote>`).join("")}</div></section>`;
   },
-
 };
 
 function css(spec) {
@@ -264,7 +271,7 @@ ${corpo}
 
 // ---------- CLI ----------
 const [cmd, ...args] = process.argv.slice(2);
-const VERSAO = '0.4.7';
+const VERSAO = '0.4.8';
 
 // ---------- versao ----------
 if (cmd === "--version" || cmd === "-v") {
